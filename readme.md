@@ -6,4 +6,10 @@
 4. npm i dotenv cors - Backend
 5. npm install --save-dev nodemon - Backend
 6. npm install typescript ts-node-dev -D - Backend
-7. npx tsc --init
+7. npx tsc --init -  Backend
+8. npm i mongoose - Backend
+9. npm i bcrypt jsonwebtoken - Backend
+10. npm i --save-dev @types/bcrypt - Backend
+11. npm i --save-dev @types/jsonwebtoken - Backend
+12. npm i express-validator
+
