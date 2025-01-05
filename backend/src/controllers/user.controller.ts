@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as userService from "../services/user.service";
 import { ValidationError, validationResult } from "express-validator";
 import userModel from "../models/user.model";
+import BlacklistToken from "../models/blacklistToken.model";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -80,8 +81,43 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     const token = user.generateAuthToken();
-    res.json({ user, token });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 86400, //24 hours
+    });
+    res.status(200).json({ user, token });
   } catch (error) {
+    res.status(500).json({ error: "Something Went Wrong.Please try again." });
+  }
+};
+
+export const getUserProfile = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Something Went Wrong.Please try again." });
+  }
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    const token =
+      req.cookies.token ||
+      (req.headers["authorization"]?.split(" ")[1] as string);
+    res.clearCookie("token");
+    await BlacklistToken.create({ token });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    let errorMessage = "Something Went Wrong.Please try again.";
+    if ((error as any).code === 11000) {
+      errorMessage = "Token already exists";
+    }
     res.status(500).json({ error: "Something Went Wrong.Please try again." });
   }
 };

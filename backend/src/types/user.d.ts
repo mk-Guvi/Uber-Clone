@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export interface ICreateUserPayload {
   firstName: string;
@@ -22,6 +22,12 @@ export interface IUserMethods {
   comparePassword(password: string): Promise<boolean>;
 }
 
-export interface IUserModel extends mongoose.Model<IUser, {}, IUserMethods> {
+// Add IUserDocument interface
+export interface IUserDocument extends IUser, Document {
+  generateAuthToken(): string;
+  comparePassword(password: string): Promise<boolean>;
+}
+
+export interface IUserModel extends mongoose.Model<IUserDocument, {}, IUserMethods> {
   hashPassword(password: string): Promise<string>;
 }

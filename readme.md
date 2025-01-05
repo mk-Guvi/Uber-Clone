@@ -11,5 +11,7 @@
 9. npm i bcrypt jsonwebtoken - Backend
 10. npm i --save-dev @types/bcrypt - Backend
 11. npm i --save-dev @types/jsonwebtoken - Backend
-12. npm i express-validator
+12. npm i express-validator - Backend
+13. npm install --save-dev @types/cookie-parser - Backend
+14. npm i cookie-parser - Backend
 

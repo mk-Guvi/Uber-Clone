@@ -1,5 +1,5 @@
 import userModel from "../models/user.model";
-import { ICreateUserPayload } from "../types/user.types";
+import { ICreateUserPayload } from "../types/user";
 
 export const createUser = async ({
   firstName,
