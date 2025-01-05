@@ -1,65 +1,8 @@
-# Backend README
+# Backend
 
 ## Overview
-This is the backend service for the UberClone application. It handles user management, authentication, and other backend functionalities.
+This is the backend service for the UberClone application.
 
-## Project Structure
-- `user.model.ts`: Defines the User model and schema.
-- `user.routes.ts`: Contains the routes for user-related operations.
-- `user.service.ts`: Implements the business logic for user operations.
-- `user.controller.ts`: Handles the HTTP requests and responses for user operations.
-
-## API Documentation
-
-### User API
-
-#### Create User
-- **Endpoint**: `POST /users`
-- **Description**: Creates a new user.
-- **Request Payload**:
-    ```json
-    {
-        "name": "John Doe",
-        "email": "john.doe@example.com",
-        "password": "password123"
-    }
-    ```
-    - **Response**:
-        - **Status Code**: `201 Created`
-        - **Body**:
-            ```json
-            {
-                "id": "user_id",
-                "name": "John Doe",
-                "email": "john.doe@example.com"
-            }
-            ```
-    - **400 Bad Request**
-        ```json
-        {
-          "success": false,
-          "errors": [
-            {
-              "field": "email",
-              "message": "Please provide a valid email"
-            }
-          ]
-        }
-        ```
-
-    - **500 Internal Server Error**
-        ```json
-        {
-          "error": "Error registering user"
-        }
-        ```
-
-    - **11000 Duplicate Key Error**
-        ```json
-        {
-          "error": "User already exists"
-        }
-        ```
 
 ## Setup
 1. Clone the repository.
@@ -71,6 +14,82 @@ This is the backend service for the UberClone application. It handles user manag
      ```sh
      npm start
      ```
+
+# Backend API Documentation
+
+## `/users/register` Endpoint
+
+### Description
+
+Registers a new user by creating a user account with the provided information.
+
+### HTTP Method
+
+`POST`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- `fullname` (object):
+  - `firstname` (string, required): User's first name (minimum 3 characters).
+  - `lastname` (string, optional): User's last name (minimum 3 characters).
+- `email` (string, required): User's email address (must be a valid email).
+- `password` (string, required): User's password (minimum 6 characters).
+
+-    ```json
+    {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "password": "password123"
+    }
+    ```
+
+### Example Response
+
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token
+
+## `/users/login` Endpoint
+
+### Description
+
+Authenticates a user using their email and password, returning a JWT token upon successful login.
+
+### HTTP Method
+
+`POST`
+
+### Endpoint
+
+`/users/login`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields:
+
+- **Request Payload**:
+    ```json
+    {
+        "email": "john.doe@example.com",
+        "password": "password123"
+    }
+    ```
+### Example Response
+
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).   
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token
+
 
 ## License
 This project is licensed under the MIT License.
