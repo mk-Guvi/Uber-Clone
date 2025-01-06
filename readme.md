@@ -14,4 +14,9 @@
 12. npm i express-validator - Backend
 13. npm install --save-dev @types/cookie-parser - Backend
 14. npm i cookie-parser - Backend
+15. npm create vite@latest - root folder
+16. create react project named frontend
+17. cd frontend and npm i - frontend
+18. npm install -D tailwindcss postcss autoprefixer - frontend
+19. npx tailwindcss init -p - frontend
 
