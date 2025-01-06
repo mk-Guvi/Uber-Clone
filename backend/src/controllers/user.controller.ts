@@ -86,7 +86,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     if (!user) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(401).json({ message: "User Not Found" });
       return;
     }
     res.json(user);

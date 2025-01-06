@@ -7,9 +7,10 @@ import {
 } from "../controllers/user.controller";
 import {
   userRegisterValidation,
-  userLoginValidation,
+  
 } from "../validators/user.validators";
 import { authUser } from "../middlewares/auth.middleware";
+import { userLoginValidation } from "../validators/common.validators";
 const router = express.Router();
 
 router.post("/register", userRegisterValidation, registerUser);

@@ -2,6 +2,7 @@ import { ValidationError, validationResult } from "express-validator";
 import { createCaptain } from "../services/captain.service";
 import { Request, Response } from "express";
 import captainModel from "../models/captain.model";
+import BlacklistToken from "../models/blacklistToken.model";
 
 export const registerCaptain = async (req: Request, res: Response) => {
   try {
@@ -44,5 +45,72 @@ export const registerCaptain = async (req: Request, res: Response) => {
     }
 
     res.status(403).json({ message: errorMessage });
+  }
+};
+
+export const loginCaptain = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        success: false,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    const captain = await captainModel.findOne({ email }).select("+password"); //by default password is not selected
+    if (!captain) {
+      res.status(404).json({ message: "Invalid email or password" });
+      return;
+    }
+
+    const isMatch = await captain.comparePassword(password);
+    if (!isMatch) {
+      res.status(401).json({ message: "Invalid email or password" });
+      return;
+    }
+
+    const token = captain.generateAuthToken();
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 86400, //24 hours
+    });
+    res.status(200).json({ captain, token });
+  } catch (error) {
+    res.status(403).json({ message: "Error logging in captain" });
+  }
+};
+
+export const getCaptainProfile = async (req: Request, res: Response) => {
+  try {
+    const captain = req.captain;
+    if (!captain) {
+      res.status(401).json({ message: "Captain Not Found" });
+      return;
+    }
+    res.json(captain);
+  } catch (error) {
+    res.status(500).json({ message: "Something Went Wrong.Please try again." });
+  }
+};
+
+export const logoutCaptain = async (req: Request, res: Response) => {
+  try {
+    const token =
+      req.cookies.token ||
+      (req.headers["authorization"]?.split(" ")[1] as string);
+    res.clearCookie("token");
+    await BlacklistToken.create({ token });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    let errorMessage = "Something Went Wrong.Please try again.";
+    if ((error as any).code === 11000) {
+      errorMessage = "Token already exists";
+    }
+    res.status(500).json({ message: "Something Went Wrong.Please try again." });
   }
 };
