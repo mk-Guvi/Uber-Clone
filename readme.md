@@ -19,4 +19,5 @@
 17. cd frontend and npm i - frontend
 18. npm install -D tailwindcss postcss autoprefixer - frontend
 19. npx tailwindcss init -p - frontend
+20. npm i react-router-dom -  frontend
 
