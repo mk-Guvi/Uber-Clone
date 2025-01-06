@@ -5,6 +5,7 @@ import cors from "cors";
 import connectDB from "./db/db";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes";
+import captainRoutes from "./routes/captain.routes";
 
 
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/users", userRoutes);
+app.use("/captains", captainRoutes);
 
 app.get("/", (_: Request, res: Response) => {
   res.send("Server is running!");

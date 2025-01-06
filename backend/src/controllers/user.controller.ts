@@ -12,12 +12,7 @@ export const registerUser = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       res.status(400).json({
         success: false,
-        errors: errors.array().map((error) => {
-          return {
-            field: (error as ValidationError & { path: string }).path,
-            message: error.msg,
-          };
-        }),
+        errors: errors.array(),
       });
       return;
     }
@@ -45,7 +40,7 @@ export const registerUser = async (req: Request, res: Response) => {
       }
     }
 
-    res.status(403).json({ error: errorMessage });
+    res.status(403).json({ message: errorMessage });
   }
 };
 
@@ -57,12 +52,7 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
       res.status(400).json({
         success: false,
-        errors: errors.array().map((error) => {
-          return {
-            field: (error as ValidationError & { path: string }).path,
-            message: error.msg,
-          };
-        }),
+        errors: errors.array(),
       });
       return;
     }
@@ -76,7 +66,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      res.status(400).json({ error: "Invalid email or password" });
+      res.status(400).json({ message: "Invalid email or password" });
       return;
     }
 
@@ -88,7 +78,7 @@ export const loginUser = async (req: Request, res: Response) => {
     });
     res.status(200).json({ user, token });
   } catch (error) {
-    res.status(500).json({ error: "Something Went Wrong.Please try again." });
+    res.status(500).json({ message: "Something Went Wrong.Please try again." });
   }
 };
 
@@ -101,7 +91,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
     }
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: "Something Went Wrong.Please try again." });
+    res.status(500).json({ message: "Something Went Wrong.Please try again." });
   }
 };
 
@@ -118,6 +108,6 @@ export const logoutUser = async (req: Request, res: Response) => {
     if ((error as any).code === 11000) {
       errorMessage = "Token already exists";
     }
-    res.status(500).json({ error: "Something Went Wrong.Please try again." });
+    res.status(500).json({ message: "Something Went Wrong.Please try again." });
   }
 };
