@@ -1,7 +1,8 @@
-import StartPage from "./Start";
+
 
 function Home() {
-  return <StartPage />;
+  return <div>Home</div>
 }
 
 export default Home;
+

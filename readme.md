@@ -6,7 +6,7 @@
 4. npm i dotenv cors - Backend
 5. npm install --save-dev nodemon - Backend
 6. npm install typescript ts-node-dev -D - Backend
-7. npx tsc --init -  Backend
+7. npx tsc --init - Backend
 8. npm i mongoose - Backend
 9. npm i bcrypt jsonwebtoken - Backend
 10. npm i --save-dev @types/bcrypt - Backend
@@ -19,5 +19,5 @@
 17. cd frontend and npm i - frontend
 18. npm install -D tailwindcss postcss autoprefixer - frontend
 19. npx tailwindcss init -p - frontend
-20. npm i react-router-dom -  frontend
-
+20. npm i react-router-dom - frontend
+21. npm i axios - frontend
