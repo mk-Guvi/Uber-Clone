@@ -1,9 +1,7 @@
-import React from 'react'
+import StartPage from "./Start";
 
 function Home() {
-  return (
-    <div>Home</div>
-  )
+  return <StartPage />;
 }
 
-export default Home
+export default Home;
