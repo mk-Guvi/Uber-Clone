@@ -7,6 +7,9 @@ import CaptainSignup from "./pages/CaptainSignup";
 import StartPage from "./pages/Start";
 import UserProtectWrapper from "./HOC/UserProtectWrapper";
 import UserLogout from "./pages/UserLogout";
+import CaptainProtectWrapper from "./HOC/CaptainProtectWrapper";
+import CaptainHome from "./pages/CaptainHome";
+import CaptainLogout from "./pages/CaptainLogout";
 
 function App() {
   return (
@@ -31,7 +34,23 @@ function App() {
       />
       <Route path="/signup" element={<UserSignup />} />
       <Route path="/captain-login" element={<CaptainLogin />} />
+      <Route
+        path="/captain-home"
+        element={
+          <CaptainProtectWrapper>
+            <CaptainHome />
+          </CaptainProtectWrapper>
+        }
+      />
       <Route path="/captain-signup" element={<CaptainSignup />} />
+      <Route
+        path="/captain/logout"
+        element={
+          <CaptainProtectWrapper>
+            <CaptainLogout />
+          </CaptainProtectWrapper>
+        }
+      />
       <Route path="*" element={<div>Not Found</div>} />
     </Routes>
   );

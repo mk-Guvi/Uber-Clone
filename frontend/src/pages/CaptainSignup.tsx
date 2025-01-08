@@ -1,19 +1,52 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCaptainData } from "../hooks/captainHook";
+import axios from "axios";
 
 function CaptainSignup() {
-    const [firstName, setFirstName] = React.useState("");
-    const [lastName, setLastName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [vehicleColor, setVehicleColor] = React.useState("");
-    const [vehiclePlate, setVehiclePlate] = React.useState("");
-    const [vehicleCapacity, setVehicleCapacity] = React.useState("");
-    const [vehicleType, setVehicleType] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [vehicleColor, setVehicleColor] = React.useState("");
+  const [vehiclePlate, setVehiclePlate] = React.useState("");
+  const [vehicleCapacity, setVehicleCapacity] = React.useState("");
+  const [vehicleType, setVehicleType] = React.useState("");
+  const { setCaptain } = useCaptainData();
+  const navigate = useNavigate();
 
-    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    };
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/register`,
+        {
+          fullName: {
+            firstName,
+            lastName,
+          },
+          email,
+          password,
+          vehicle: {
+            color: vehicleColor,
+            plate: vehiclePlate,
+            capacity: vehicleCapacity,
+            vehicleType,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        setCaptain(response.data.captain);
+        localStorage.setItem("token", response.data.token);
+        navigate("/captain-home");
+      } else {
+        throw new Error(response?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="py-5 px-5 h-screen flex flex-col justify-between">
@@ -24,9 +57,7 @@ function CaptainSignup() {
           alt=""
         />
 
-        <form
-          onSubmit={submitHandler}
-        >
+        <form onSubmit={submitHandler}>
           <h3 className="text-lg w-full  font-medium mb-2">
             What's our Captain's name
           </h3>
@@ -127,7 +158,7 @@ function CaptainSignup() {
               </option>
               <option value="car">Car</option>
               <option value="auto">Auto</option>
-              <option value="moto">Moto</option>
+              <option value="motorcycle">Motorcycle</option>
             </select>
           </div>
 

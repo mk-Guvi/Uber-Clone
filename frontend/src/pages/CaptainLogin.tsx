@@ -1,12 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCaptainData } from "../hooks/captainHook";
+import axios from "axios";
 
 function CaptainLogin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { setCaptain } = useCaptainData();
+  const navigate = useNavigate();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/login`,
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response.status === 200) {
+        setCaptain(response.data.captain);
+        localStorage.setItem("token", response.data.token);
+        navigate("/captain-home");
+      } else {
+        throw new Error(response?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
