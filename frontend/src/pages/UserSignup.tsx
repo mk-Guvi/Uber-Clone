@@ -1,15 +1,41 @@
+import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUserData } from "../hooks/usersHook";
 
 function UserSignup() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { setUser } = useUserData();
   const navigate = useNavigate();
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate("/home");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        {
+          fullName: {
+            firstName,
+            lastName,
+          },
+          email,
+          password,
+        }
+      );
+
+      if (response.status === 200) {
+        setUser(response.data.user);
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      } else {
+        throw new Error(response?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

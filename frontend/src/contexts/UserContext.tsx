@@ -1,4 +1,9 @@
-import React, { createContext, useState, Dispatch, SetStateAction } from "react";
+import React, {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 export type TUser = {
   email: string;
@@ -24,7 +29,10 @@ export const UserDataContext = createContext<UserDataContextType>({
   setUser: () => {}, // Default function to prevent runtime errors
 });
 
+
+
 const UserContext = ({ children }: { children: React.ReactNode }) => {
+  
   const [user, setUser] = useState<TUser>({
     email: "",
     fullName: {

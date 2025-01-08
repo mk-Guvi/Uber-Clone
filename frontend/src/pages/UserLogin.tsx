@@ -1,25 +1,47 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserData } from "../hooks/usersHook";
+import axios from "axios";
 
 function UserLogin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const { setUser } = useUserData();
+  const navigate = useNavigate();
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/login`,
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response.status === 200) {
+        setUser(response.data.user);
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      } else {
+        throw new Error(response?.data?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
-         <img
+        <img
           className="w-20 mb-6 mt-4"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s"
           alt=""
         />
 
-        <form
-          onSubmit={submitHandler}
-        >
+        <form onSubmit={submitHandler}>
           <h3 className="text-lg font-medium mb-2">What's your email</h3>
           <input
             required
