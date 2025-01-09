@@ -21,3 +21,6 @@
 19. npx tailwindcss init -p - frontend
 20. npm i react-router-dom - frontend
 21. npm i axios - frontend
+22. npm i gsap - frontend
+23. npm i @gsap/react - frontend
+24. npm i remixicon --save - frontend
