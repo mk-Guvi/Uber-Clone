@@ -11,6 +11,7 @@ import CaptainProtectWrapper from "./HOC/CaptainProtectWrapper";
 import CaptainHome from "./pages/CaptainHome";
 import CaptainLogout from "./pages/CaptainLogout";
 import Riding from "./pages/Riding";
+import CaptainRiding from "./pages/CaptainRiding";
 
 function App() {
   return (
@@ -37,8 +38,16 @@ function App() {
         path="/riding"
         element={
           <UserProtectWrapper>
-          <Riding />
+            <Riding />
           </UserProtectWrapper>
+        }
+      />
+      <Route
+        path="/captain-riding"
+        element={
+          <CaptainProtectWrapper>
+            <CaptainRiding />
+          </CaptainProtectWrapper>
         }
       />
       <Route path="/signup" element={<UserSignup />} />

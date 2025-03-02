@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUserData } from "../hooks/usersHook";
+import { useCaptainData } from "../hooks/captainHook";
 
 const CaptainProtectWrapper = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const { setUser } = useUserData();
+  const { setCaptain } = useCaptainData();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const CaptainProtectWrapper = ({ children }: { children: React.ReactNode }) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setUser(response.data);
+          setCaptain(response.data);
           setIsLoading(false);
         }
       })

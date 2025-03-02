@@ -49,7 +49,7 @@ function CaptainSignup() {
   };
 
   return (
-    <div className="py-5 px-5 h-screen flex flex-col justify-between">
+    <div className="py-5 px-5 h-[100dvh] flex flex-col justify-between">
       <div>
         <img
           className="w-20 mb-6 mt-4"
@@ -158,7 +158,7 @@ function CaptainSignup() {
               </option>
               <option value="car">Car</option>
               <option value="auto">Auto</option>
-              <option value="motorcycle">Motorcycle</option>
+              <option value="moto">Motorcycle</option>
             </select>
           </div>
 

@@ -146,18 +146,18 @@ const Home = () => {
   async function createRide() {}
 
   return (
-    <div className="h-screen relative overflow-hidden">
+    <div className="h-[100dvh] relative overflow-hidden">
       <img
         className="w-16 absolute left-5 top-5"
         src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
         alt=""
       />
-      <div className="h-screen w-screen">
+      <div className="h-[100dvh] w-screen">
         {/* image for temporary use  */}
         {/* <LiveTracking /> */}
       </div>
-      <div className=" flex flex-col justify-end h-screen absolute top-0 w-full">
-        <div className="h-[32%] p-6 bg-white relative">
+      <div className=" flex flex-col justify-end h-[100dvh] absolute top-0 w-full">
+        <div className="h-[37%] p-6 bg-white relative">
           <h5
             ref={panelCloseRef}
             onClick={() => {

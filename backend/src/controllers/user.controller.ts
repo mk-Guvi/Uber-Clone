@@ -58,7 +58,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     const user = await userModel.findOne({ email }).select("+password"); //by default password is not selected
-
+    
     if (!user) {
       res.status(401).json({ message: "Invalid email or password" });
       return;

@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCaptainData } from "../hooks/captainHook";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function CaptainLogin() {
   const [email, setEmail] = React.useState("");
@@ -17,6 +18,9 @@ function CaptainLogin() {
         {
           email,
           password,
+        },
+        {
+          validateStatus:()=>true
         }
       );
 
@@ -27,13 +31,15 @@ function CaptainLogin() {
       } else {
         throw new Error(response?.data?.message || "Something went wrong");
       }
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
       console.error(error);
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="p-7 h-screen flex flex-col justify-between">
+    <div className="p-7 h-[100dvh] flex flex-col justify-between">
       <div>
         <img
           className="w-20 mb-6 mt-4"

@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import UserContext from "./contexts/UserContext.tsx";
 import CaptainContext from "./contexts/CapatainContext.tsx";
+import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
       <CaptainContext>
         <UserContext>
           <App />
+          <ToastContainer />
         </UserContext>
       </CaptainContext>
     </BrowserRouter>
