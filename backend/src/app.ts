@@ -6,6 +6,7 @@ import connectDB from "./db/db";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes";
 import captainRoutes from "./routes/captain.routes";
+import mapsRoutes from "./routes/maps.routes";
 
 
 connectDB();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use("/users", userRoutes);
 app.use("/captains", captainRoutes);
+app.use("/maps", mapsRoutes);
 
 app.get("/", (_: Request, res: Response) => {
   res.send("Server is running!");
